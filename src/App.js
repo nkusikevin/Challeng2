@@ -6,7 +6,6 @@ import Footer from "./components/Footer";
 import Loader from "./components/Loader";
 import NotFound from "./components/NotFound";
 function App() {
-	const albumId = 1;
 	const [id, setId] = useState("");
 	const [pics, setPics] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -15,13 +14,16 @@ function App() {
 		setPics(null);
 		setId(e.target.value);
 		setNotFound(false);
+		setLoading(true)
 	};
 	const handleClick = async() => {
 		if (id) {
 			const { data } = await axios.get(
 				`https://jsonplaceholder.typicode.com/albums/${id}/photos`
 			);
+			console.log(data);
 			data.length < 1 ? setNotFound(true) : setPics(data);
+			setLoading(false)
 		   };
 		}
 	return (
@@ -30,7 +32,7 @@ function App() {
 				<h1>Album Finder</h1>
 				<div className='search'>
 					<input
-						type='text'
+						type='number'
 						name='search'
 						placeholder='enter album Id'
 						onChange={getId}
@@ -42,12 +44,12 @@ function App() {
 			</nav>
 			<div className='main'>
 				<ul className='cards'>
-					{notFound && <NotFound />}
-					{loading ? (
+					{notFound ? <NotFound /> :
+					loading ? (
 						<Loader />
 					) : (
 						pics.map((pic) => (
-							<Card title={pic.title} thumbnail={pic.thumbnail} />
+							<Card key={pic.id} title={pic.title} thumbnailUrl={pic.thumbnailUrl} />
 						))
 					)}
 				</ul>

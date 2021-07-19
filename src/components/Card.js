@@ -1,19 +1,15 @@
 import React from 'react'
 import '../App.css'
-function Card() {
+function Card({key,thumbnailUrl,title}) {
     return (
 			<>
-				<li className='cards_item'>
+				<li className='cards_item' key={key}>
 					<div className='card'>
 						<div className='card_image'>
-							<img src='https://picsum.photos/500/300/?image=10' />
+							<img src={thumbnailUrl} alt='thumbNail'/>
 						</div>
 						<div className='card_content'>
-							<h2 className='card_title'>Card Grid Layout</h2>
-							<p className='card_text'>
-								Demo of pixel perfect pure CSS simple responsive card grid
-								layout
-							</p>
+							<h2 className='card_title'>{title}</h2>
 						</div>
 					</div>
 				</li>
